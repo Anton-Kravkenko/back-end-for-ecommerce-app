@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,13 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id Int @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
+  CreatedAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  email     String    @unique
+  name      String
+  password  String
+  favorites Product[] @relation("FavoriteProduct")
+  cart      Product[] @relation("CartProduct")
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  CreatedAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  Picture       String
+  Name          String
+  Price         Int
+  Description   String
+  Category      String[]
+  reviews       Review[] @relation("ReviewProduct")
+  discount      Boolean? @default(false)
+  favoriteUsers User[]   @relation("FavoriteProduct")
+  cartUsers     User[]   @relation("CartProduct")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
   CreatedAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  email String @unique
-  name String
-  Password String
-  // Прописать favorite, корзину
+  rating    Int
+  message   String
+  product   Product  @relation("ReviewProduct", fields: [productId], references: [id])
+  productId Int
 }

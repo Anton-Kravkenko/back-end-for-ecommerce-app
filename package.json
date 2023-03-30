@@ -19,13 +19,14 @@
   },
   "homepage": "https://github.com/Anton-Kravkenko/back-end-for-ecommerce-app#readme",
   "dependencies": {
-    "@prisma/client": "^4.11.0",
+    "@prisma/client": "^4.12.0",
+    "argon2": "^0.30.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
     "pg": "^8.10.0",
-    "prisma": "^4.11.0"
+    "prisma": "^4.12.0"
   },
   "devDependencies": {
     "colors": "^1.4.0",
