@@ -8,29 +8,27 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  CreatedAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  email     String    @unique
+  id        Int      @id @default(autoincrement())
+  CreatedAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  email     String   @unique
   name      String
   password  String
-  favorites Product[] @relation("FavoriteProduct")
-  cart      Product[] @relation("CartProduct")
+  favorites Int[]
+  cart      Int[]
 }
 
 model Product {
-  id            Int      @id @default(autoincrement())
-  CreatedAt     DateTime @default(now()) @map("created_at")
-  updatedAt     DateTime @updatedAt @map("updated_at")
-  Picture       String
-  Name          String
-  Price         Int
-  Description   String
-  Category      String[]
-  reviews       Review[] @relation("ReviewProduct")
-  discount      Boolean? @default(false)
-  favoriteUsers User[]   @relation("FavoriteProduct")
-  cartUsers     User[]   @relation("CartProduct")
+  id          Int      @id @default(autoincrement())
+  CreatedAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  Picture     String
+  Name        String
+  Price       Int
+  Description String
+  Category    String[]
+  reviews     Review[] @relation("ReviewProduct")
+  discount    Boolean? @default(false)
 }
 
 model Review {

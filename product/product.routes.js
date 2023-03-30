@@ -7,7 +7,9 @@ import {
 	getbyId,
 	removeProduct,
 	searchByCategory,
-	searchByTitle
+	searchByTitle,
+	toggleCart,
+	toggleFavorite
 } from './product.contoler.js'
 
 const router = express.Router()
@@ -19,4 +21,6 @@ router.route('/removeProductById/:id').delete(protect, removeProduct)
 router.route('/AddProductReview/:id').post(protect, addProductRewiew)
 router.route('/searchProduct/:title').get(searchByTitle)
 router.route('/searchProductByCategory/:term').get(searchByCategory)
+router.route('/addToCart/:id').post(protect, toggleCart)
+router.route('/addToFavorite/:id').post(protect, toggleFavorite)
 export default router

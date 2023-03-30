@@ -121,4 +121,65 @@ export const searchByCategory = asyncHandler(async (req, res, next) => {
 })
 
 
+export const toggleCart = asyncHandler(async (req, res, next) => {
+	const user = await prisma.user.findUnique({
+		where: { id: req.user.id }
+	})
+	
+	if (!user.cart.includes(+req.params.id)) {
+		console.log('push')
+		const res2 = await prisma.user.update({
+			where: { id: req.user.id },
+			data: {
+				cart: {
+					push: +req.params.id
+				}
+			}
+		})
+		res.json(res2)
+	} else {
+		console.log('delete')
+		const res3 = await prisma.user.update({
+			where: { id: req.user.id },
+			data: {
+				cart: { set: user.cart.filter((item) => item !== +req.params.id) }
+				
+			}
+		})
+		res.json(res3)
+	}
+	
+})
 
+
+export const toggleFavorite = asyncHandler(async (req, res, next) => {
+	const user = await prisma.user.findUnique({
+		where: { id: req.user.id }, select: {
+			favorites: true
+		}
+	})
+	
+	if (!user.favorites.includes(+req.params.id)) {
+		console.log('push')
+		const res2 = await prisma.user.update({
+			where: { id: req.user.id },
+			data: {
+				favorites: {
+					push: +req.params.id
+				}
+			}
+		})
+		res.json(res2)
+	} else {
+		console.log('delete')
+		const res3 = await prisma.user.update({
+			where: { id: req.user.id },
+			data: {
+				favorites: { set: user.favorites.filter((item) => item !== +req.params.id) }
+				
+			}
+		})
+		res.json(res3)
+	}
+	
+})
