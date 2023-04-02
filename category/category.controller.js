@@ -31,9 +31,9 @@ id: +id
 })
 export const GetCategorybySlug = asyncHandler(async (req, res) => {
 	const { slug } = req.params
-	const category = await prisma.category.findUnique({
+	const category = await prisma.category.findFirst({
 		where: {
-	slug: slug
+slug
 		}
 	})
 	res.json(category)

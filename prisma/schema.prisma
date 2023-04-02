@@ -25,9 +25,10 @@ model Product {
   Picture     String
   Name        String
   Price       Int
+  Currency    String
+  Publisher   String
   Description String
   reviews     Review[]   @relation("ReviewProduct")
-  discount    Boolean?   @default(false)
   category    Category[]
 }
 

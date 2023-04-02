@@ -4,7 +4,8 @@ import { prisma } from '../prisma.js'
 export const getAllProduct = asyncHandler(async (req, res, next) => {
 	const products = await prisma.product.findMany({
 		include: {
-			reviews: true
+			reviews: true,
+			category: true
 		}
 	})
 	if (products) {
@@ -113,9 +114,12 @@ export const toggleCart = asyncHandler(async (req, res, next) => {
 	const user = await prisma.user.findUnique({
 		where: { id: req.user.id }
 	})
-	
-	if (!user.cart.includes(+req.params.id)) {
-		console.log('push')
+	const isProductAvailable = await prisma.product.findUnique({
+		where: {
+			id: +req.params.id
+		}
+	})
+	if (!user.cart.includes(+req.params.id) && isProductAvailable) {
 		const res2 = await prisma.user.update({
 			where: { id: req.user.id },
 			data: {
@@ -126,7 +130,10 @@ export const toggleCart = asyncHandler(async (req, res, next) => {
 		})
 		res.json(res2)
 	} else {
-		console.log('delete')
+		if (!isProductAvailable) {
+			res.status(400)
+			throw new Error('Not found product')
+		}
 		const res3 = await prisma.user.update({
 			where: { id: req.user.id },
 			data: {
@@ -146,9 +153,12 @@ export const toggleFavorite = asyncHandler(async (req, res, next) => {
 			favorites: true
 		}
 	})
-	
-	if (!user.favorites.includes(+req.params.id)) {
-		console.log('push')
+	const isProductAvailable = await prisma.product.findUnique({
+		where: {
+			id: +req.params.id
+		}
+	})
+	if (!user.favorites.includes(+req.params.id) && isProductAvailable) {
 		const res2 = await prisma.user.update({
 			where: { id: req.user.id },
 			data: {
@@ -159,7 +169,10 @@ export const toggleFavorite = asyncHandler(async (req, res, next) => {
 		})
 		res.json(res2)
 	} else {
-		console.log('delete')
+		if (!isProductAvailable) {
+			res.status(400)
+			throw new Error('Not found product')
+		}
 		const res3 = await prisma.user.update({
 			where: { id: req.user.id },
 			data: {
