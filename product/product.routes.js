@@ -5,7 +5,7 @@ import {
 	addProductRewiew,
 	getAllProduct,
 	getbyId,
-	removeProduct, searchByCategory,
+	removeProduct,  searchByCategoryById, searchByCategorybySlug,
 	searchByTitle,
 	toggleCart,
 	toggleFavorite
@@ -19,7 +19,8 @@ router.route('/get-product-by-id/:id').get(getbyId)
 router.route('/remove-product-by-id/:id').delete(protect, removeProduct)
 router.route('/add-product-review-by-id/:id').post(protect, addProductRewiew)
 router.route('/search-product-by-title/:title').get(searchByTitle)
-router.route('/search-product-by-category/:category').get(searchByCategory)
+router.route('/search-product-by-category-slug/:slug').get(searchByCategorybySlug)
+router.route('/search-product-by-category-id/:id').get(searchByCategoryById)
 router.route('/add-to-cart-by-id/:id').post(protect, toggleCart)
 router.route('/add-to-favorite-by-id/:id').post(protect, toggleFavorite)
 export default router

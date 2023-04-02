@@ -107,12 +107,15 @@ export const searchByTitle = asyncHandler(async (req, res, next) => {
 		throw new Error('not found')
 	}
 })
-export const searchByCategory = asyncHandler(async (req, res, next) => {
+export const searchByCategorybySlug = asyncHandler(async (req, res, next) => {
 	const searchByTitles = await prisma.product.findMany({
+		include: {
+			category: true
+		},
 		where: {
 			category: {
 				some: {
-					slug: req.params.category
+					slug: req.params.slug
 				}
 			}
 		}
@@ -125,7 +128,26 @@ export const searchByCategory = asyncHandler(async (req, res, next) => {
 	}
 })
 
-
+export const searchByCategoryById = asyncHandler(async (req, res, next) => {
+	const searchByTitles = await prisma.product.findMany({
+		include: {
+			category: true
+		},
+		where: {
+	category: {
+		some: {
+			id: +req.params.id
+		}
+	}
+		}
+	})
+	if (searchByTitles) {
+		res.json(searchByTitles)
+	} else {
+		res.status(400)
+		throw new Error('not found')
+	}
+})
 
 export const toggleCart = asyncHandler(async (req, res, next) => {
 	const user = await prisma.user.findUnique({
