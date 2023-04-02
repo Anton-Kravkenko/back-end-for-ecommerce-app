@@ -19,16 +19,16 @@ model User {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  CreatedAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id          Int        @id @default(autoincrement())
+  CreatedAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
   Picture     String
   Name        String
   Price       Int
   Description String
-  Category    String[]
-  reviews     Review[] @relation("ReviewProduct")
-  discount    Boolean? @default(false)
+  reviews     Review[]   @relation("ReviewProduct")
+  discount    Boolean?   @default(false)
+  category    Category[]
 }
 
 model Review {
@@ -39,4 +39,13 @@ model Review {
   message   String
   product   Product  @relation("ReviewProduct", fields: [productId], references: [id])
   productId Int
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  CreatedAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  name      String
+  slug      String    @unique
+  products  Product[]
 }

@@ -35,14 +35,18 @@ export const addProduct = asyncHandler(async (req, res, next) => {
 	const { Name, Picture, Price, Description, Category } = req.body
 	console.log(Name, Picture, Price, Description, Category)
 	if (Name, Picture, Price, Description, Category) {
-		
 		const product = await prisma.product.create({
+				include: {
+					category: true
+				},
 			data: {
 				Name,
 				Picture,
 				Price,
 				Description,
-				Category
+				category: {
+					create: Category
+				}
 			}
 		})
 		res.json(product)
@@ -103,22 +107,6 @@ export const searchByTitle = asyncHandler(async (req, res, next) => {
 	}
 })
 
-
-export const searchByCategory = asyncHandler(async (req, res, next) => {
-	const searchByCategorys = await prisma.product.findMany({
-		where: {
-			Category: {
-				has: req.params.term
-			}
-		}
-	})
-	if (searchByCategorys) {
-		res.json(searchByCategorys)
-	} else {
-		res.status(400)
-		throw new Error('Already delete or not found')
-	}
-})
 
 
 export const toggleCart = asyncHandler(async (req, res, next) => {

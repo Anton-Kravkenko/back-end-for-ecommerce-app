@@ -6,7 +6,6 @@ import {
 	getAllProduct,
 	getbyId,
 	removeProduct,
-	searchByCategory,
 	searchByTitle,
 	toggleCart,
 	toggleFavorite
@@ -14,13 +13,12 @@ import {
 
 const router = express.Router()
 
-router.route('/getAllProduct').get(getAllProduct)
-router.route('/AddProduct').post(protect, addProduct)
-router.route('/getProductById/:id').get(getbyId)
-router.route('/removeProductById/:id').delete(protect, removeProduct)
-router.route('/AddProductReview/:id').post(protect, addProductRewiew)
-router.route('/searchProduct/:title').get(searchByTitle)
-router.route('/searchProductByCategory/:term').get(searchByCategory)
-router.route('/addToCart/:id').post(protect, toggleCart)
-router.route('/addToFavorite/:id').post(protect, toggleFavorite)
+router.route('/get-all-product').get(getAllProduct)
+router.route('/add-product').post(protect, addProduct)
+router.route('/get-product-by-id/:id').get(getbyId)
+router.route('/remove-product-by-id/:id').delete(protect, removeProduct)
+router.route('/add-product-review-by-id/:id').post(protect, addProductRewiew)
+router.route('/search-product-by-title/:title').get(searchByTitle)
+router.route('/add-to-cart-by-id/:id').post(protect, toggleCart)
+router.route('/add-to-favorite-by-id/:id').post(protect, toggleFavorite)
 export default router

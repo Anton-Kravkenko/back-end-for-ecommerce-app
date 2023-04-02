@@ -1,7 +1,6 @@
 import { hash,verify } from 'argon2'
 import { prisma } from '../prisma.js'
 import asyncHandler from 'express-async-handler'
-import { UserField } from '../utils/userField.js'
 import { generateToken } from './generate.token.js'
 
 

@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import * as dotenv from 'dotenv'
 const app = express()
 import 'colors'
+import CategoryRoutes from './category/category.routes.js'
 import { ErrorHandler, notFound } from './middleware/error.middleware.js'
 import { prisma } from './prisma.js'
 import productRoutes from './product/product.routes.js'
@@ -17,6 +18,7 @@ async function main(){
 	app.use('/api/auth', authRoutes)
 	app.use('/api/users', userRoutes)
 	app.use('/api/products', productRoutes)
+	app.use('/api/category', CategoryRoutes)
 	app.use(notFound, ErrorHandler)
 	app.listen(process.env.PORT, console.log('YES!!!', process.env.PORT.green.bold))
 }

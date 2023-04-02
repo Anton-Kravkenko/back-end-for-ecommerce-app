@@ -4,7 +4,7 @@ import { getProfileCart, getProfileFavorite, getUserProfile } from './user.conto
 
 const router = express.Router()
 
-router.route('/Profile').get(protect, getUserProfile)
-router.route('/Profile/Favorites').get(protect, getProfileFavorite)
-router.route('/Profile/Cart').get(protect, getProfileCart)
+router.route('/profile').get(protect, getUserProfile)
+router.route('/profile/favorites').get(protect, getProfileFavorite)
+router.route('/profile/cart').get(protect, getProfileCart)
 export default router
