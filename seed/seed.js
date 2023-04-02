@@ -12,18 +12,18 @@ async function seedDatabase() {
 		// Step 2: Map the JSON object to your database schema
 		const mappedData = await Promise.all(data.map(async obj => {
 			let category;
-			if (obj.genre) {
+			if (obj.category) {
 				category = await prisma.category.findUnique({
 					where: {
-						slug: obj.genre.toLowerCase().replace(/ /g, '-')
+						slug: obj.category.toLowerCase().replace(/ /g, '-')
 					}
 				});
 				
 				if (!category) {
 					category = await prisma.category.create({
 						data: {
-							name: obj.genre,
-							slug: obj.genre.toLowerCase().replace(/ /g, '-')
+							name: obj.category,
+							slug: obj.category.toLowerCase().replace(/ /g, '-')
 						}
 					});
 				}
@@ -45,12 +45,11 @@ async function seedDatabase() {
 				}
 			}
 			
-			console.log(category);
 			return {
-				Name: obj.title,
-				Picture: obj.url,
-				Description: obj.description.join("").replace(/<[^>]*>?/gm, "") ?? "No description",
-				Publisher: obj.publisher ? obj.publisher : obj.brand ?? "No publisher",
+				Name: obj.name,
+				Picture: obj.imageURL,
+				Description: obj.Description,
+				Publisher: obj.brand ,
 				category: {
 					connect: {
 						id: category.id

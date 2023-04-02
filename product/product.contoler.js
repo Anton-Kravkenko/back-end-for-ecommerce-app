@@ -104,7 +104,24 @@ export const searchByTitle = asyncHandler(async (req, res, next) => {
 		res.json(searchByTitles)
 	} else {
 		res.status(400)
-		throw new Error('Already delete or not found')
+		throw new Error('not found')
+	}
+})
+export const searchByCategory = asyncHandler(async (req, res, next) => {
+	const searchByTitles = await prisma.product.findMany({
+		where: {
+			category: {
+				some: {
+					slug: req.params.category
+				}
+			}
+		}
+	})
+	if (searchByTitles) {
+		res.json(searchByTitles)
+	} else {
+		res.status(400)
+		throw new Error('not found')
 	}
 })
 
